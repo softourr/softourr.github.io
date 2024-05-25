@@ -1,10 +1,9 @@
-# 🍥Fuwari
+# LogVenture
+> I log the challenges I've experienced.
 
 A static blog template built with [Astro](https://astro.build).
 
-[**🖥️Live Demo (Vercel)**](https://fuwari.vercel.app)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**🌏中文 README**](https://github.com/saicaca/fuwari/blob/main/README.zh-CN.md)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**🌏日本語 README**](https://github.com/saicaca/fuwari/blob/main/README.ja-JP.md)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**📦Old Hexo Version**](https://github.com/saicaca/hexo-theme-vivia)
-
-![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
+![Preview Image](https://github.com/hhzzzk/hhzzzk.github.io/assets/67236054/85619185-27b5-458a-9ded-8a12002cfa70)
 
 ## ✨ Features
 
