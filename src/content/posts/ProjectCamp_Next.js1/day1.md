@@ -1,10 +1,10 @@
 ---
-title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 사전직무교육 1일차"
+title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 1일차"
 published: 2024-05-25
 description: "시작된 9-6 life..."
 image: "../img/NextJS.png"
-tags: [ProjectCamp]
-category: JavaScript
+tags: [JavaScript]
+category: ProjectCamp
 draft: false
 ---
 
@@ -53,7 +53,7 @@ script 위치는 크게 2가지로 사용
 
 sol1 ) async 사용 : html 파싱과 병렬로 진행
 
-- async 속성을 사용하면 스크립트는 
+- async 속성을 사용하면 스크립트는
 
   html 파싱과 병렬
 
@@ -163,7 +163,6 @@ const a = "10" ? "hi" : "bye";
 console.log(a);
 // "hi"
 // true, 0/undefined/null이 아니면 참으로 봄
-
 ```
 
 - &&(and) : 앞expr1이 거짓이면 뒤는 안본다.

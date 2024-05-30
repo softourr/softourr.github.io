@@ -1,10 +1,10 @@
 ---
-title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 사전직무교육 2일차"
+title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 2일차"
 published: 2024-05-27
 description: "호이호이 호이스팅"
 image: "../img/NextJS.png"
-tags: [ProjectCamp]
-category: JavaScript
+tags: [JavaScript]
+category: ProjectCamp
 draft: false
 ---
 

@@ -1,10 +1,10 @@
 ---
-title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 사전직무교육 3일차"
+title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 3일차"
 published: 2024-05-28
 description: "점점 늘어나는 분량 ......"
 image: "../img/NextJS.png"
-tags: [ProjectCamp]
-category: JavaScript
+tags: [JavaScript]
+category: ProjectCamp
 draft: false
 ---
 

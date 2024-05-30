@@ -3,8 +3,8 @@ title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 5
 published: 2024-05-30
 description: "타입스크립트, 리액트, 컴포넌트"
 image: "../img/NextJS.png"
-tags: [ProjectCamp]
-category: Typescript, React
+tags: [Typescript, React]
+category: ProjectCamp
 draft: false
 ---
 

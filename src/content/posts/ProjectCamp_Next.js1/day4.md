@@ -3,8 +3,8 @@ title: "[유데미x스나이퍼팩토리] 프로젝트 캠프 : Next.js 1기 - 4
 published: 2024-05-29
 description: "DOM 처리, Promise, async, await"
 image: "../img/NextJS.png"
-tags: [ProjectCamp]
-category: JavaScript
+tags: [JavaScript]
+category: ProjectCamp
 draft: false
 ---
 
