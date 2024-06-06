@@ -12,8 +12,6 @@ draft: false
 
 금요일이당~
 
-집에 가기 전에 블로그 올리는게 매일 목표였는데 6일차에는 실패 (ㅠ 앞으로 쉽지 않을듯..?) 프로젝트 캠프 시작하고 맞이하는 첫 주말이요 주말에 복습하고 정리하고 할 게 많지만 그래도 아자아자~ 오늘의 이모지는 불꽃놀이~ friday night~
-
 [🔊 너에게 닿기를](https://www.youtube.com/watch?v=86Hucafv918)
 
 # 리액트
@@ -63,8 +61,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 ```
 
-- **`ReactDOM.createRoot`**는 **`root`**라는 루트 DOM 컨테이너를 생성합니다. 이 루트 컨테이너는 **`public/index.html`** 파일 내의 **`<div id="root"></div>`** 요소를 참조합니다.
-- **`root.render`** 메서드는 리액트 컴포넌트를 해당 루트 DOM 요소에 렌더링합니다. 여기서는 **`<App />`** 컴포넌트를 렌더링하고 있습니다.
+- `ReactDOM.createRoot`는 `root`라는 루트 DOM 컨테이너를 생성합니다. 이 루트 컨테이너는 `public/index.html` 파일 내의 `<div id="root"></div>` 요소를 참조합니다.
+- `root.render` 메서드는 리액트 컴포넌트를 해당 루트 DOM 요소에 렌더링합니다. 여기서는 `<App />` 컴포넌트를 렌더링하고 있습니다.
 
 ---
 
@@ -73,7 +71,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 > 1. rafc 단축키를 이용해 컴포넌트를 작성하자
 > 2. 자동 import 경로설정 추가는 컴포넌트 이름의 끝에서 ctrl+space
 
-**`.button`** 클래스가 아닌 **`button`** 태그에 직접 스타일을 적용하고 있기 때문에 선택자 앞의 점(**`.`**)을 지워야 합니다. 이렇게 하면 **`button`** 태그를 가진 모든 요소에 스타일이 적용됩니다.
+`.button` 클래스가 아닌 `button` 태그에 직접 스타일을 적용하고 있기 때문에 선택자 앞의 점(**`.`**)을 지워야 합니다. 이렇게 하면 **`button`** 태그를 가진 모든 요소에 스타일이 적용됩니다.
 
 ## 리액트 컴포넌트 CSS 스타일링 🎆
 
@@ -685,7 +683,7 @@ const inputEl = useRef<HTMLInputElement>(null);
 ```
 
 1. **`useRef`**: useRef 훅은 React 컴포넌트 내에서 DOM 요소에 접근할 때 사용됩니다. 이 훅을 사용하면 함수 컴포넌트 내에서 DOM 요소를 선택하고 조작할 수 있습니다.
-2. **`useRef<HTMLInputElement>(null)`**: 이 코드는 useRef 훅을 사용하여 DOM 요소에 대한 참조를 생성합니다. **`<HTMLInputElement>`**은 참조하려는 DOM 요소의 타입을 나타냅니다. **`null`**은 초기값으로 설정되며, useRef를 호출할 때 DOM 요소에 대한 초기 참조가 없음을 나타냅니다.
+2. **`useRef<HTMLInputElement>(null)`**: 이 코드는 useRef 훅을 사용하여 DOM 요소에 대한 참조를 생성합니다. `<HTMLInputElement>`은 참조하려는 DOM 요소의 타입을 나타냅니다. `null`은 초기값으로 설정되며, useRef를 호출할 때 DOM 요소에 대한 초기 참조가 없음을 나타냅니다.
 3. **`const inputEl`**: 이 코드는 useRef를 통해 생성된 참조를 저장할 변수를 선언합니다. 이 변수를 통해 후속 코드에서 DOM 요소에 액세스할 수 있습니다.
 
 inputEl을 통해 input 요소에 직접 액세스할 수 있게 됩니다.

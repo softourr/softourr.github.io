@@ -207,7 +207,7 @@ let printName = function () {
 // 실제 동작 let printName; 호이스팅
 ```
 
-let 키워드로 선언한 경우 마찬가지로 변수 선언은 호이스팅된다. let은 초기화되지 않은 상태에서는 참조할 수 없기 때문에 함수는 아직 초기화되지 않았다는 참조 오류가 발생한다. 초기화되지 않고 선언만 된 let 변수는 **Temporal Dead Zone(TDZ)**에 들어간다.
+let 키워드로 선언한 경우 마찬가지로 변수 선언은 호이스팅된다. let은 초기화되지 않은 상태에서는 참조할 수 없기 때문에 함수는 아직 초기화되지 않았다는 참조 오류가 발생한다. 초기화되지 않고 선언만 된 let 변수는 `Temporal Dead Zone(TDZ)`에 들어간다.
 
 ---
 
@@ -353,10 +353,10 @@ fetchData(displayData);
 // Data received: { name: 'Alice', age: 25 }
 ```
 
-**`fetchData`** 함수가 **`setTimeout`**을 사용하여 1초 후에 데이터를 가져오고 **`callback`** 함수를 호출한다. **`fetchData`** 함수가 호출될 때 **`displayData`** 함수가 콜백으로 전달되어, 1초 후에 데이터를 받아서 출력한다.
+**`fetchData`** 함수가 `setTimeout`을 사용하여 1초 후에 데이터를 가져오고 **`callback`** 함수를 호출한다. **`fetchData`** 함수가 호출될 때 **`displayData`** 함수가 콜백으로 전달되어, 1초 후에 데이터를 받아서 출력한다.
 
 <aside>
-💡 **`setTimeout`**은 JavaScript의 내장 함수로, 지정한 시간(밀리초 단위) 후에 코드를 실행한다. 여기서는 1000밀리초(1초) 후에 콜백 함수를 실행
+💡 `setTimeout`은 JavaScript의 내장 함수로, 지정한 시간(밀리초 단위) 후에 코드를 실행한다. 여기서는 1000밀리초(1초) 후에 콜백 함수를 실행
 
 전체적인 흐름은 fetchData가 호출되고, 해당 함수 내부에서 타임아웃이 설정되어 1초 후에 내부 함수를 실행한다. 1초 후 내부 함수가 실행되고 data 객체가 생성된다. 생성된 객체가 콜백으로 전달되고 콘솔에 출력된다.
 
