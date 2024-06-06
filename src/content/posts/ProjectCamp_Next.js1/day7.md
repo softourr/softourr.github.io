@@ -60,7 +60,7 @@ export default Button;
 
 디버깅하는 방법 : 개발자도구의 components 이용하기
 
-![1](./imgDay7.png "day7")
+![1](./img/imgDay7.png "day7")
 
 ```tsx
 e.preventDefault();
@@ -366,8 +366,8 @@ export default App;
 
 ### ❇️ 실습 Todo
 
-![2](./imgDay7_2.png "day7-2")
-![3](./imgDay7_3.png "day7-3")
+![2](./img/imgDay7_2.png "day7-2")
+![3](./img/imgDay7_3.png "day7-3")
 
 ---
 

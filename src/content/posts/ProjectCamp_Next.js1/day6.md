@@ -303,7 +303,7 @@ h-12
 
 tailwind 적용 연습해보기 next에서 이거 씀
 
-![1](./imgDay6.png "day6-1")
+![1](./img/imgDay6.png "day6-1")
 
 ## props 🎆
 
@@ -578,7 +578,7 @@ const Button = (props: IButtonProps) => {
 export default Button;
 ```
 
-![2](./imgDay6_2.png "day6-2")
+![2](./img/imgDay6_2.png "day6-2")
 
 ---
 
