@@ -10,7 +10,7 @@ draft: false
 
 # 프로젝트 캠프 10일차
 
-[🔊누군가의 하루 끝에 녹아서](https://www.youtube.com/watch?v=Ym7JA64i3Fo&list=RDsEVEfXdXc3Q)
+[🔊누군가의 하루 끝에 녹아서](https://www.youtube.com/watch?v=H0hZCJVEFsY)
 
 ## todo를 zustand로 전역상태 관리하기 🍮
 
