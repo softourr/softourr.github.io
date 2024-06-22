@@ -5,7 +5,7 @@ description: "Promise.all"
 image: "../img/NextJS.png"
 tags: [Next.js, React]
 category: ProjectCamp
-draft: true
+draft: false
 ---
 
 # 프로젝트 캠프 12일차
