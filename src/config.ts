@@ -8,7 +8,7 @@ import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
   title: "LogVenture",
-  subtitle: "hez",
+  subtitle: "kak",
   lang: "en", // 'en', 'zh_CN', 'zh_TW', 'ja'
   themeColor: {
     hue: 180, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
@@ -44,25 +44,13 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
   avatar: "assets/images/profile.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-  name: "hez",
-  bio: "🚧 공사중 🚧",
+  name: "kak",
+  bio: "ㅂㄱㅂㄱ",
   links: [
-    // {
-    //   name: "Twitter",
-    //   icon: "fa6-brands:twitter", // Visit https://icones.js.org/ for icon codes
-    //   // You will need to install the corresponding icon set if it's not already included
-    //   // `pnpm add @iconify-json/<icon-set-name>`
-    //   url: "https://twitter.com",
-    // },
-    // {
-    //   name: "Steam",
-    //   icon: "fa6-brands:steam",
-    //   url: "https://store.steampowered.com",
-    // },
     {
       name: "GitHub",
       icon: "fa6-brands:github",
-      url: "https://github.com/hhzzzk/hhzzzk.github.io",
+      url: "https://github.com/hhzzzk",
     },
   ],
 };
