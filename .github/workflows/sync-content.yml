@@ -117,7 +117,7 @@ jobs:
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git add src/content/imported/ .last_sync_time
+          git add src/content/posts/ .last_sync_time
           
           if git diff --staged --quiet; then
             echo "No changes to commit"
