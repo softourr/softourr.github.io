@@ -21,9 +21,18 @@ jobs:
           path: source-repo
           token: ${{ secrets.PAT_TOKEN }}
 
-      - name: Set timezone to KST
+      - name: Set up environment
         run: |
           sudo timedatectl set-timezone Asia/Seoul
+          # 로케일 설정 (한글 지원)
+          sudo apt-get update && sudo apt-get install -y locales
+          sudo locale-gen ko_KR.UTF-8
+          echo "LC_ALL=ko_KR.UTF-8" >> $GITHUB_ENV
+          echo "LANG=ko_KR.UTF-8" >> $GITHUB_ENV
+          
+          # 디버깅 목적으로 전체 파일 리스트 출력
+          echo "===== Obsidian Study 폴더의 모든 마크다운 파일 ====="
+          find source-repo/Study -name "*.md" | sort
 
       - name: Create target directory
         run: |
@@ -42,60 +51,58 @@ jobs:
           
           echo "마지막 동기화: $LAST_RUN"
           
-          # 소스 레포지토리의 Study 폴더에서 변경된 마크다운 파일 찾기
-          cd source-repo
-          CHANGED_FILES=$(git log --since="$LAST_RUN" --name-only --pretty=format: | grep -E "^Study/.*\.md$" | sort -u)
-          cd ..
+          # 모든 마크다운 파일을 직접 처리 (한글 파일명 문제 우회)
+          echo "모든 마크다운 파일을 처리합니다..."
           
-          # 변경된 파일이 없으면 전체 파일 처리 (첫 실행 시)
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "변경된 파일이 없거나 첫 실행입니다. 모든 마크다운 파일을 확인합니다."
-            CHANGED_FILES=$(find source-repo/Study -type f -name "*.md" | sed 's|^source-repo/||')
-          fi
-          
-          # 각 파일 처리
-          for file in $CHANGED_FILES; do
-            echo "처리 중: $file"
+          find source-repo/Study -type f -name "*.md" | while read src_path; do
+            # 상대 경로 추출
+            rel_path="${src_path#source-repo/}"
+            
+            echo "처리 중: $rel_path"
             
             # Study 다음 폴더명 추출 (카테고리용)
-            category=$(echo "$file" | sed -n 's|^Study/\([^/]*\)/.*|\1|p')
+            category=$(echo "$rel_path" | awk -F'/' '{print $2}')
             if [ -z "$category" ]; then
               category="Study"
             fi
             
             # 파일명 추출
-            filename=$(basename "$file")
+            filename=$(basename "$src_path")
             dest_file="src/content/posts/$filename"
             
-            # 파일 제목 추출
-            title=$(echo "$filename" | sed 's/\.md$//' | sed 's/_/ /g' | sed 's/-/ /g')
+            # 파일 제목 추출 (확장자 제거)
+            title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
             
             # 수정 날짜 가져오기
-            modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$file")
+            modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
             if [ -z "$modified_date" ]; then
               modified_date=$(date +"%Y-%m-%d")
             fi
             
             # 프론트매터 생성 및 파일 복사
-            {
-              echo "---"
-              echo "title: \"$title\""
-              echo "published: $modified_date"
-              echo "tags: [$category, Study]"
-              echo "category: $category"
-              echo "draft: false"
-              echo "---"
-              
-              # 기존 프론트매터가 있으면 제거
-              if grep -q "^---" "source-repo/$file"; then
-                sed -e '1{/^---$/!q;};1,/^---$/d' "source-repo/$file"
-              else
-                cat "source-repo/$file"
-              fi
-            } > "$dest_file"
+            echo "---" > "$dest_file"
+            echo "title: \"$title\"" >> "$dest_file"
+            echo "published: $modified_date" >> "$dest_file"
+            echo "tags: [$category, Study]" >> "$dest_file"
+            echo "category: $category" >> "$dest_file"
+            echo "draft: false" >> "$dest_file"
+            echo "---" >> "$dest_file"
+            
+            # 기존 프론트매터가 있으면 제거하고 내용만 추가
+            if grep -q "^---" "$src_path"; then
+              # 프론트매터 제거하고 내용만 추출
+              sed -e '1{/^---$/!q;};1,/^---$/d' "$src_path" >> "$dest_file"
+            else
+              # 프론트매터 없으면 전체 내용 추가
+              cat "$src_path" >> "$dest_file"
+            fi
             
             echo "✅ 생성 완료: $dest_file (카테고리: $category)"
           done
+          
+          # 생성된 파일 목록 출력
+          echo "===== 생성된 파일 목록 ====="
+          ls -la src/content/posts/
           
           # 현재 시간을 타임스탬프 파일에 저장
           date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
