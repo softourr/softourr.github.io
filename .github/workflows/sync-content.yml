@@ -1,4 +1,4 @@
-name: Sync Javascript Content from Obsidian
+name: Sync Study Content from Obsidian
 
 on:
   workflow_dispatch:  # 수동으로 트리거 가능
@@ -17,141 +17,105 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v4
         with:
-          repository: softourr/obsidian  # 소스 레포지토리 경로
+          repository: softourr/obsidian
           path: source-repo
           token: ${{ secrets.PAT_TOKEN }}
-          fetch-depth: 0  # 전체 히스토리 가져오기
 
-      - name: Set timezone to KST
+      - name: Set up environment
         run: |
           sudo timedatectl set-timezone Asia/Seoul
-          echo "Current time (KST): $(date)"
-
-      - name: Create target directory if not exists
-        run: |
-          mkdir -p src/content/posts  # 대상 폴더
-
-      - name: Copy and process markdown files
-        run: |
-          # Study/Javascript 폴더의 마크다운 파일 찾기
-          MARKDOWN_FILES=$(find source-repo/Study/Javascript -name "*.md" || echo "")
+          # 로케일 설정 (한글 지원)
+          sudo apt-get update && sudo apt-get install -y locales
+          sudo locale-gen ko_KR.UTF-8
+          echo "LC_ALL=ko_KR.UTF-8" >> $GITHUB_ENV
+          echo "LANG=ko_KR.UTF-8" >> $GITHUB_ENV
           
-          if [ -z "$MARKDOWN_FILES" ]; then
-            echo "🔴 마크다운 파일을 찾을 수 없습니다. 소스 경로를 확인하세요."
-            
-            # 전체 저장소에서 마크다운 파일 검색 (디버깅용)
-            echo "전체 저장소에서 마크다운 파일 검색:"
-            find source-repo -name "*.md" | head -n 10
-            exit 1
+          # 디버깅 목적으로 전체 파일 리스트 출력
+          echo "===== Obsidian Study 폴더의 모든 마크다운 파일 ====="
+          find source-repo/Study -name "*.md" | sort
+
+      - name: Create target directory
+        run: |
+          mkdir -p src/content/posts
+
+      - name: Sync markdown files
+        run: |
+          # 마지막 실행 시간 확인
+          TIMESTAMP_FILE=".last_sync_time"
+          if [ -f "$TIMESTAMP_FILE" ]; then
+            LAST_RUN=$(cat "$TIMESTAMP_FILE")
+          else
+            # 처음 실행 시 어제 날짜 사용
+            LAST_RUN=$(date -d "yesterday" +"%Y-%m-%d %H:%M:%S")
           fi
           
-          echo "🟢 처리할 마크다운 파일: $(echo "$MARKDOWN_FILES" | wc -l)개"
+          echo "마지막 동기화: $LAST_RUN"
           
-          # 오늘 날짜 (기본 날짜)
-          TODAY=$(date +"%Y-%m-%d")
+          # 모든 마크다운 파일을 직접 처리 (한글 파일명 문제 우회)
+          echo "모든 마크다운 파일을 처리합니다..."
           
-          # 각 파일 처리
-          for src_file in $MARKDOWN_FILES; do
-            filename=$(basename "$src_file")
+          find source-repo/Study -type f -name "*.md" | while read src_path; do
+            # 상대 경로 추출
+            rel_path="${src_path#source-repo/}"
+            
+            echo "처리 중: $rel_path"
+            
+            # Study 다음 폴더명 추출 (카테고리용)
+            category=$(echo "$rel_path" | awk -F'/' '{print $2}')
+            if [ -z "$category" ]; then
+              category="Study"
+            fi
+            
+            # 파일명 추출
+            filename=$(basename "$src_path")
             dest_file="src/content/posts/$filename"
             
-            echo "🔄 처리 중: $src_file -> $dest_file"
+            # 파일 제목 추출 (확장자 제거)
+            title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
             
-            # 파일 제목 추출 (파일명에서)
-            title=$(echo "$filename" | sed 's/\.md$//' | sed 's/_/ /g' | sed 's/-/ /g')
-            
-            # 수정 날짜 가져오기 (KST 기준)
-            modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$src_file" || echo "$TODAY")
-            
-            # 날짜가 비어있거나 null인 경우 오늘 날짜 사용
-            if [ -z "$modified_date" ] || [ "$modified_date" = "null" ]; then
-              modified_date="$TODAY"
-              echo "- 유효한 날짜를 찾을 수 없어 오늘 날짜를 사용합니다: $modified_date"
+            # 수정 날짜 가져오기
+            modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
+            if [ -z "$modified_date" ]; then
+              modified_date=$(date +"%Y-%m-%d")
             fi
             
-            # README.md 파일 특별 처리
-            if [ "$filename" = "README.md" ]; then
-              echo "- README.md 파일은 일반 콘텐츠와 다르게 처리합니다"
-              title="Javascript Study Guide"
-            fi
+            # 프론트매터 생성 및 파일 복사
+            echo "---" > "$dest_file"
+            echo "title: \"$title\"" >> "$dest_file"
+            echo "published: $modified_date" >> "$dest_file"
+            echo "tags: [$category, Study]" >> "$dest_file"
+            echo "category: $category" >> "$dest_file"
+            echo "draft: false" >> "$dest_file"
+            echo "---" >> "$dest_file"
             
-            # 프론트매터 확인 및 처리
-            if grep -q "^---" "$src_file"; then
-              echo "- 기존 프론트매터 제거 및 새 프론트매터 추가"
-              # 기존 프론트매터 제거 후 새 프론트매터 추가
-              content=$(sed -e '1{/^---$/!q;};1,/^---$/d' "$src_file")
-              
-              {
-                echo "---"
-                echo "title: \"$title\""
-                echo "published: $modified_date"
-                echo "tags: [Javascript, Study]"
-                echo "category: Javascript"
-                echo "draft: false"
-                echo "---"
-                echo "$content"
-              } > "$dest_file"
+            # 기존 프론트매터가 있으면 제거하고 내용만 추가
+            if grep -q "^---" "$src_path"; then
+              # 프론트매터 제거하고 내용만 추출
+              sed -e '1{/^---$/!q;};1,/^---$/d' "$src_path" >> "$dest_file"
             else
-              echo "- 새 프론트매터 추가"
-              # 프론트매터가 없는 경우 추가
-              {
-                echo "---"
-                echo "title: \"$title\""
-                echo "published: $modified_date"
-                echo "tags: [Javascript, Study]"
-                echo "category: Javascript"
-                echo "draft: false"
-                echo "---"
-                cat "$src_file"
-              } > "$dest_file"
+              # 프론트매터 없으면 전체 내용 추가
+              cat "$src_path" >> "$dest_file"
             fi
             
-            # 프론트매터에 유효한 날짜가 있는지 확인
-            if ! grep -q "published: [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}" "$dest_file"; then
-              echo "⚠️ 생성된 파일에 유효한 published 날짜가 없습니다. 수정 중..."
-              sed -i "s/published: .*/published: $TODAY/" "$dest_file"
-            fi
-            
-            echo "✅ 파일 생성 완료: $dest_file"
+            echo "✅ 생성 완료: $dest_file (카테고리: $category)"
           done
-
-      - name: Verify frontmatter
-        run: |
-          echo "생성된 파일의 프론트매터 검증 중..."
-          for file in src/content/posts/*.md; do
-            echo "확인 중: $file"
-            if ! grep -q "published: [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}" "$file"; then
-              echo "⚠️ 파일 $file에 유효한 published 날짜가 없습니다. 수정 중..."
-              sed -i "s/published: .*/published: $(date +"%Y-%m-%d")/" "$file"
-            fi
-          done
-
-      - name: List processed files
-        run: |
-          echo "생성된 파일 목록:"
-          ls -la src/content/posts/
-          echo "총 파일 수: $(find src/content/posts -type f | wc -l)"
           
-          echo "파일 프론트매터 샘플:"
-          for file in $(ls -1 src/content/posts/ | head -n 3); do
-            echo "----- $file -----"
-            head -n 10 "src/content/posts/$file"
-            echo "-----------------"
-          done
+          # 생성된 파일 목록 출력
+          echo "===== 생성된 파일 목록 ====="
+          ls -la src/content/posts/
+          
+          # 현재 시간을 타임스탬프 파일에 저장
+          date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
 
-      - name: Commit changes if any
+      - name: Commit changes
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git add src/content/posts/
-          
-          # 변경사항 확인
-          git status
+          git add src/content/posts/ .last_sync_time
           
           if git diff --staged --quiet; then
             echo "커밋할 변경사항이 없습니다"
           else
-            git commit -m "Obsidian Javascript 학습 노트 동기화 (KST: $(date +"%Y-%m-%d %H:%M:%S"))"
+            git commit -m "Obsidian Study 동기화 ($(date +"%Y-%m-%d %H:%M:%S"))"
             git push
-            echo "✅ 변경사항을 성공적으로 커밋하고 푸시했습니다"
           fi
