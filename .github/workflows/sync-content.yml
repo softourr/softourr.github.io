@@ -62,6 +62,12 @@ jobs:
               category="Study"
             fi
             
+            # "guide" 폴더는 무시
+            if [ "$category" = "guide" ]; then
+              echo "⚠️ guide 폴더는 무시합니다: $rel_path"
+              continue
+            fi
+            
             # 카테고리 디렉토리 생성
             mkdir -p "src/content/posts/$category"
             
@@ -105,12 +111,8 @@ jobs:
 
       - name: Update README.md
         run: |
-          # 디버깅 - 모든 마크다운 파일 찾기
-          echo "현재 존재하는 마크다운 파일 목록:"
-          find src/content/posts -type f -name "*.md" | sort
-          
-          # 다른 방식으로 모든 카테고리 찾기
-          CATEGORIES=$(find src/content/posts -mindepth 1 -maxdepth 1 -type d | sort | xargs -n 1 basename)
+          # guide 폴더 제외하고 모든 카테고리 찾기
+          CATEGORIES=$(find src/content/posts -mindepth 1 -maxdepth 1 -type d -not -name "guide" | sort | xargs -n 1 basename)
           echo "발견된 카테고리: $CATEGORIES"
           
           if [ -z "$CATEGORIES" ]; then
@@ -152,26 +154,20 @@ jobs:
               # 파일명과 제목 추출
               filename=$(basename "$file")
               
-              # 디버깅 - 파일 내용 확인
-              echo "파일 $file의 처음 10줄:"
-              head -n 10 "$file"
-              
               # 프론트매터에서 제목 추출 시도
               title=$(grep -A1 "title:" "$file" | tail -n 1 | sed 's/^title: *"\(.*\)"$/\1/' | sed 's/^title: *//')
               
               # 제목이 추출되지 않으면 파일명에서 생성
               if [ -z "$title" ]; then
-                echo "⚠️ $file 파일에서 제목을 추출할 수 없습니다. 파일명을 사용합니다."
                 title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
               fi
               
               # 파일명에서 확장자 제거 (URL 경로용)
               slug=${filename%.md}
-              # 블로그 URL 생성
-              blog_url="https://softourr.github.io/posts/${slug}/"
+              # 블로그 URL 생성 - 카테고리를 포함한 정확한 URL 형식 사용
+              blog_url="https://softourr.github.io/posts/${category,,}/${slug}/"
               
               echo "- [${title}](${blog_url})" >> README.md
-              echo "  ✅ 추가됨: $title -> $blog_url"
             done
           done
           
