@@ -1,0 +1,127 @@
+name: Sync Content from External Repository
+
+on:
+  workflow_dispatch:  # 수동으로 트리거 가능
+  schedule:
+    - cron: '0 */6 * * *'  # 6시간마다 실행
+
+jobs:
+  sync-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout blog repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          repository: softourr/obsidian  # 소스 레포지토리 경로
+          path: source-repo
+          token: ${{ secrets.PAT_TOKEN }}
+          sparse-checkout: |
+            Study/Javascript  # 가져올 폴더 경로 (예시)
+          sparse-checkout-cone-mode: false
+
+      - name: Create target directory if not exists
+        run: |
+          mkdir -p src/content/posts  # 대상 폴더 (필요에 따라 수정)
+
+      - name: Copy and process markdown files
+        run: |
+          # 마지막 실행 시간 확인용 파일
+          TIMESTAMP_FILE=".last_sync_time"
+          
+          # 마지막 실행 시간 가져오기
+          if [ -f "$TIMESTAMP_FILE" ]; then
+            LAST_RUN=$(cat "$TIMESTAMP_FILE")
+          else
+            # 처음 실행하는 경우 어제 날짜로 설정
+            LAST_RUN=$(date -d "yesterday" +"%Y-%m-%d %H:%M:%S")
+          fi
+          
+          echo "Last sync time: $LAST_RUN"
+          
+          # 마지막 실행 이후 변경된 마크다운 파일 찾기
+          cd source-repo
+          CHANGED_FILES=$(git log --since="$LAST_RUN" --name-only --pretty=format: | grep -E "^content/posts/.*\.md$" | sort -u)
+          cd ..
+          
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No files changed since last run"
+          else
+            echo "Changed files:"
+            echo "$CHANGED_FILES"
+            
+            # 변경된 각 파일 처리
+            for file in $CHANGED_FILES; do
+              if [ -f "source-repo/$file" ]; then
+                filename=$(basename "$file")
+                target_file="src/content/imported/$filename"
+                
+                echo "Processing file: $file -> $target_file"
+                
+                # 프론트매터 확인
+                if grep -q "^---" "source-repo/$file"; then
+                  # 기존 프론트매터 제거 후 새 프론트매터 추가
+                  content=$(sed -e '1{/^---$/!q;};1,/^---$/d' "source-repo/$file")
+                  
+                  # 파일 제목 추출 (파일명에서)
+                  title=$(echo "$filename" | sed 's/\.md$//' | sed 's/_/ /g' | sed 's/-/ /g')
+                  
+                  # 수정 날짜 가져오기
+                  modified_date=$(git -C source-repo log -1 --format=%ad --date=short -- "$file")
+                  if [ -z "$modified_date" ]; then
+                    modified_date=$(date +%Y-%m-%d)
+                  fi
+                  
+                  # 새 프론트매터와 내용 결합
+                  {
+                    echo "---"
+                    echo "title: $title"
+                    echo "published: $modified_date"
+                    echo "tags: [Markdown, Blogging, Demo]"
+                    echo "category: Examples"
+                    echo "draft: true"
+                    echo "---"
+                    echo "$content"
+                  } > "$target_file"
+                else
+                  # 프론트매터가 없는 경우 추가
+                  title=$(echo "$filename" | sed 's/\.md$//' | sed 's/_/ /g' | sed 's/-/ /g')
+                  modified_date=$(git -C source-repo log -1 --format=%ad --date=short -- "$file")
+                  if [ -z "$modified_date" ]; then
+                    modified_date=$(date +%Y-%m-%d)
+                  fi
+                  
+                  {
+                    echo "---"
+                    echo "title: $title"
+                    echo "published: $modified_date"
+                    echo "tags: [Markdown, Blogging, Demo]"
+                    echo "category: Examples"
+                    echo "draft: true"
+                    echo "---"
+                    cat "source-repo/$file"
+                  } > "$target_file"
+                fi
+              fi
+            done
+          fi
+          
+          # 현재 시간을 타임스탬프 파일에 저장
+          date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add src/content/imported/ .last_sync_time
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Sync content from external repository"
+            git push
+          fi
