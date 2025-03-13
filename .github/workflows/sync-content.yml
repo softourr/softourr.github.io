@@ -58,7 +58,7 @@ jobs:
             for file in $CHANGED_FILES; do
               if [ -f "source-repo/$file" ]; then
                 filename=$(basename "$file")
-                target_file="src/content/imported/$filename"
+                target_file="src/content/posts/$filename"
                 
                 echo "Processing file: $file -> $target_file"
                 
