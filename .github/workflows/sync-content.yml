@@ -109,8 +109,25 @@ jobs:
           # 현재 시간을 타임스탬프 파일에 저장
           date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install urllib3
+
       - name: Update README.md
         run: |
+          # Python 스크립트 생성 - URL 인코딩을 위해
+          cat > url_encode.py << 'EOL'
+          import sys
+          import urllib.parse
+
+          # 인자로 받은 문자열을 URL 인코딩하여 반환
+          if len(sys.argv) > 1:
+              input_str = sys.argv[1]
+              encoded = urllib.parse.quote(input_str)
+              print(encoded)
+          EOL
+          
           # guide 폴더 제외하고 모든 카테고리 찾기
           CATEGORIES=$(find src/content/posts -mindepth 1 -maxdepth 1 -type d -not -name "guide" | sort | xargs -n 1 basename)
           echo "발견된 카테고리: $CATEGORIES"
@@ -154,8 +171,8 @@ jobs:
               # 파일명과 제목 추출
               filename=$(basename "$file")
               
-              # 프론트매터에서 제목 추출 시도
-              title=$(grep -A1 "title:" "$file" | tail -n 1 | sed 's/^title: *"\(.*\)"$/\1/' | sed 's/^title: *//')
+              # 프론트매터에서 제목 추출 시도 (정규식 개선)
+              title=$(grep -A1 "title:" "$file" | tail -n 1 | sed 's/^title: *"\(.*\)"$/\1/' | sed 's/^title: *//' | sed 's/"//g')
               
               # 제목이 추출되지 않으면 파일명에서 생성
               if [ -z "$title" ]; then
@@ -164,16 +181,21 @@ jobs:
               
               # 파일명에서 확장자 제거 (URL 경로용)
               slug=${filename%.md}
-              # 블로그 URL 생성 - 카테고리를 포함한 정확한 URL 형식 사용
-              blog_url="https://softourr.github.io/posts/${category,,}/${slug}/"
+              
+              # Python을 사용하여 slug URL 인코딩
+              encoded_slug=$(python url_encode.py "$slug")
+              
+              # 블로그 URL 생성 - 카테고리와 인코딩된 slug 사용
+              blog_url="https://softourr.github.io/posts/${category,,}/${encoded_slug}/"
               
               echo "- [${title}](${blog_url})" >> README.md
+              echo "  ✅ 링크 생성: $title -> $blog_url"
             done
           done
           
           # README.md 내용 출력 (디버깅용)
           echo "===== README.md 내용 ====="
-          cat README.md
+          cat README.md | head -n 20
 
       - name: Commit changes
         run: |
