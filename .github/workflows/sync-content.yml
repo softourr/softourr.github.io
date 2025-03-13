@@ -35,11 +35,7 @@ jobs:
           mkdir -p src/content/posts
 
       - name: Sync markdown files
-        id: sync-files
         run: |
-          # 카테고리 정보를 저장할 배열 초기화
-          declare -a CATEGORY_PATHS
-          
           # 마지막 실행 시간 확인
           TIMESTAMP_FILE=".last_sync_time"
           if [ -f "$TIMESTAMP_FILE" ]; then
@@ -66,14 +62,8 @@ jobs:
               category="Study"
             fi
             
-            # 카테고리 목록에 추가 (중복 없이)
-            if ! echo "${CATEGORY_PATHS[@]}" | grep -q "$category"; then
-              CATEGORY_PATHS+=("$category")
-              
-              # 카테고리 디렉토리 생성
-              mkdir -p "src/content/posts/$category"
-              echo "카테고리 디렉토리 생성: src/content/posts/$category"
-            fi
+            # 카테고리 디렉토리 생성
+            mkdir -p "src/content/posts/$category"
             
             # 파일명 추출
             filename=$(basename "$src_path")
@@ -110,20 +100,23 @@ jobs:
             echo "✅ 생성 완료: $dest_file (카테고리: $category)"
           done
           
-          # 카테고리 정보를 파일에 저장 (다음 단계에서 사용)
-          printf "%s\n" "${CATEGORY_PATHS[@]}" > categories.txt
-          
           # 현재 시간을 타임스탬프 파일에 저장
           date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
-          
-          # 디렉토리 구조 출력 (디버깅용)
-          echo "===== 디렉토리 구조 ====="
-          find src/content/posts -type d | sort
 
       - name: Update README.md
         run: |
-          # 카테고리 목록 읽기
-          CATEGORIES=$(cat categories.txt)
+          # 디버깅 - 모든 마크다운 파일 찾기
+          echo "현재 존재하는 마크다운 파일 목록:"
+          find src/content/posts -type f -name "*.md" | sort
+          
+          # 다른 방식으로 모든 카테고리 찾기
+          CATEGORIES=$(find src/content/posts -mindepth 1 -maxdepth 1 -type d | sort | xargs -n 1 basename)
+          echo "발견된 카테고리: $CATEGORIES"
+          
+          if [ -z "$CATEGORIES" ]; then
+            echo "⚠️ 카테고리가 발견되지 않았습니다. 파일 구조를 확인하세요."
+            ls -la src/content/posts/
+          fi
           
           # README.md 파일 생성 시작
           cat > README.md << EOL
@@ -147,14 +140,28 @@ jobs:
             echo -e "\n## ${category}\n" >> README.md
             
             # 해당 카테고리 디렉토리의 모든 마크다운 파일 찾기
-            find "src/content/posts/$category" -type f -name "*.md" | sort | while read file; do
+            category_files=$(find "src/content/posts/$category" -type f -name "*.md" | sort)
+            
+            if [ -z "$category_files" ]; then
+              echo "⚠️ $category 카테고리에 마크다운 파일이 없습니다."
+              echo "*현재 파일 없음*" >> README.md
+              continue
+            fi
+            
+            echo "$category_files" | while read file; do
               # 파일명과 제목 추출
               filename=$(basename "$file")
+              
+              # 디버깅 - 파일 내용 확인
+              echo "파일 $file의 처음 10줄:"
+              head -n 10 "$file"
+              
               # 프론트매터에서 제목 추출 시도
-              title=$(grep -A1 "^title:" "$file" | tail -n 1 | sed 's/^title: \?"\(.*\)"/\1/' | sed 's/^"//' | sed 's/"$//')
+              title=$(grep -A1 "title:" "$file" | tail -n 1 | sed 's/^title: *"\(.*\)"$/\1/' | sed 's/^title: *//')
               
               # 제목이 추출되지 않으면 파일명에서 생성
               if [ -z "$title" ]; then
+                echo "⚠️ $file 파일에서 제목을 추출할 수 없습니다. 파일명을 사용합니다."
                 title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
               fi
               
@@ -164,15 +171,13 @@ jobs:
               blog_url="https://softourr.github.io/posts/${slug}/"
               
               echo "- [${title}](${blog_url})" >> README.md
+              echo "  ✅ 추가됨: $title -> $blog_url"
             done
           done
           
           # README.md 내용 출력 (디버깅용)
           echo "===== README.md 내용 ====="
           cat README.md
-          
-          # 임시 파일 삭제
-          rm -f categories.txt
 
       - name: Commit changes
         run: |
