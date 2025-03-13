@@ -1,4 +1,4 @@
-name: Sync Study Content from Obsidian
+name: Sync Study Content and Update README
 
 on:
   workflow_dispatch:  # 수동으로 트리거 가능
@@ -29,17 +29,18 @@ jobs:
           sudo locale-gen ko_KR.UTF-8
           echo "LC_ALL=ko_KR.UTF-8" >> $GITHUB_ENV
           echo "LANG=ko_KR.UTF-8" >> $GITHUB_ENV
-          
-          # 디버깅 목적으로 전체 파일 리스트 출력
-          echo "===== Obsidian Study 폴더의 모든 마크다운 파일 ====="
-          find source-repo/Study -name "*.md" | sort
 
       - name: Create target directory
         run: |
           mkdir -p src/content/posts
 
       - name: Sync markdown files
+        id: sync-files
         run: |
+          # 변경된 파일 목록을 저장할 배열 초기화
+          declare -a PROCESSED_FILES
+          declare -a CATEGORY_LIST
+          
           # 마지막 실행 시간 확인
           TIMESTAMP_FILE=".last_sync_time"
           if [ -f "$TIMESTAMP_FILE" ]; then
@@ -51,8 +52,8 @@ jobs:
           
           echo "마지막 동기화: $LAST_RUN"
           
-          # 모든 마크다운 파일을 직접 처리 (한글 파일명 문제 우회)
-          echo "모든 마크다운 파일을 처리합니다..."
+          # 모든 마크다운 파일을 직접 처리
+          echo "마크다운 파일을 처리합니다..."
           
           find source-repo/Study -type f -name "*.md" | while read src_path; do
             # 상대 경로 추출
@@ -64,6 +65,11 @@ jobs:
             category=$(echo "$rel_path" | awk -F'/' '{print $2}')
             if [ -z "$category" ]; then
               category="Study"
+            fi
+            
+            # 카테고리 목록에 추가 (중복 없이)
+            if [[ ! " ${CATEGORY_LIST[@]} " =~ " ${category} " ]]; then
+              CATEGORY_LIST+=("$category")
             fi
             
             # 파일명 추출
@@ -97,25 +103,73 @@ jobs:
               cat "$src_path" >> "$dest_file"
             fi
             
+            # 처리된 파일 정보 저장 (카테고리, 제목, 파일명)
+            PROCESSED_FILES+=("$category|$title|$filename")
+            
             echo "✅ 생성 완료: $dest_file (카테고리: $category)"
           done
           
-          # 생성된 파일 목록 출력
-          echo "===== 생성된 파일 목록 ====="
-          ls -la src/content/posts/
+          # 처리된 파일 정보를 파일에 저장 (다음 단계에서 사용)
+          printf "%s\n" "${PROCESSED_FILES[@]}" > processed_files.txt
+          printf "%s\n" "${CATEGORY_LIST[@]}" > category_list.txt
           
           # 현재 시간을 타임스탬프 파일에 저장
           date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
+
+      - name: Update README.md
+        run: |
+          # 처리된 파일 정보와 카테고리 목록 읽기
+          PROCESSED_FILES=$(cat processed_files.txt)
+          CATEGORY_LIST=$(cat category_list.txt)
+          
+          # README.md 파일 생성
+          cat > README.md << EOL
+          # Study Notes
+          
+          이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: $(date +"%Y-%m-%d %H:%M:%S")
+          
+          ## 목차
+          
+          EOL
+          
+          # 카테고리별 목차 추가
+          for category in $CATEGORY_LIST; do
+            echo "- [${category}](#${category,,})" >> README.md  # 소문자로 변환한 앵커
+          done
+          
+          echo "" >> README.md  # 빈 줄 추가
+          
+          # 카테고리별로 파일 목록 추가
+          for category in $CATEGORY_LIST; do
+            echo -e "\n## ${category}\n" >> README.md
+            
+            echo "$PROCESSED_FILES" | grep "^${category}|" | while read line; do
+              IFS='|' read -r cat title filename <<< "$line"
+              # 파일명에서 확장자 제거 (URL 경로용)
+              slug=${filename%.md}
+              # 블로그 URL 생성 (실제 경로 구조에 맞게 수정)
+              blog_url="https://softourr.github.io/posts/${slug}/"
+              
+              echo "- [${title}](${blog_url})" >> README.md
+            done
+          done
+          
+          # README.md 내용 출력 (디버깅용)
+          echo "===== README.md 내용 ====="
+          cat README.md
+          
+          # 임시 파일 삭제
+          rm processed_files.txt category_list.txt
 
       - name: Commit changes
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git add src/content/posts/ .last_sync_time
+          git add src/content/posts/ README.md .last_sync_time
           
           if git diff --staged --quiet; then
             echo "커밋할 변경사항이 없습니다"
           else
-            git commit -m "Obsidian Study 동기화 ($(date +"%Y-%m-%d %H:%M:%S"))"
+            git commit -m "Obsidian Study 동기화 및 README 업데이트 ($(date +"%Y-%m-%d %H:%M:%S"))"
             git push
           fi
