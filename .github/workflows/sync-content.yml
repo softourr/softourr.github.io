@@ -37,9 +37,8 @@ jobs:
       - name: Sync markdown files
         id: sync-files
         run: |
-          # 변경된 파일 목록을 저장할 배열 초기화
-          declare -a PROCESSED_FILES
-          declare -a CATEGORY_LIST
+          # 카테고리 정보를 저장할 배열 초기화
+          declare -a CATEGORY_PATHS
           
           # 마지막 실행 시간 확인
           TIMESTAMP_FILE=".last_sync_time"
@@ -68,8 +67,8 @@ jobs:
             fi
             
             # 카테고리 목록에 추가 (중복 없이)
-            if [[ ! " ${CATEGORY_LIST[@]} " =~ " ${category} " ]]; then
-              CATEGORY_LIST+=("$category")
+            if ! echo "${CATEGORY_PATHS[@]}" | grep -q "$category"; then
+              CATEGORY_PATHS+=("$category")
               
               # 카테고리 디렉토리 생성
               mkdir -p "src/content/posts/$category"
@@ -108,15 +107,11 @@ jobs:
               cat "$src_path" >> "$dest_file"
             fi
             
-            # 처리된 파일 정보 저장 (카테고리, 제목, 파일명)
-            PROCESSED_FILES+=("$category|$title|$filename")
-            
             echo "✅ 생성 완료: $dest_file (카테고리: $category)"
           done
           
-          # 처리된 파일 정보를 파일에 저장 (다음 단계에서 사용)
-          printf "%s\n" "${PROCESSED_FILES[@]}" > processed_files.txt
-          printf "%s\n" "${CATEGORY_LIST[@]}" > category_list.txt
+          # 카테고리 정보를 파일에 저장 (다음 단계에서 사용)
+          printf "%s\n" "${CATEGORY_PATHS[@]}" > categories.txt
           
           # 현재 시간을 타임스탬프 파일에 저장
           date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
@@ -127,11 +122,10 @@ jobs:
 
       - name: Update README.md
         run: |
-          # 처리된 파일 정보와 카테고리 목록 읽기
-          PROCESSED_FILES=$(cat processed_files.txt)
-          CATEGORY_LIST=$(cat category_list.txt)
+          # 카테고리 목록 읽기
+          CATEGORIES=$(cat categories.txt)
           
-          # README.md 파일 생성
+          # README.md 파일 생성 시작
           cat > README.md << EOL
           # Study Notes
           
@@ -142,21 +136,31 @@ jobs:
           EOL
           
           # 카테고리별 목차 추가
-          for category in $CATEGORY_LIST; do
+          for category in $CATEGORIES; do
             echo "- [${category}](#${category,,})" >> README.md  # 소문자로 변환한 앵커
           done
           
           echo "" >> README.md  # 빈 줄 추가
           
-          # 카테고리별로 파일 목록 추가
-          for category in $CATEGORY_LIST; do
+          # 각 카테고리별로 파일 목록 추가
+          for category in $CATEGORIES; do
             echo -e "\n## ${category}\n" >> README.md
             
-            echo "$PROCESSED_FILES" | grep "^${category}|" | while read line; do
-              IFS='|' read -r cat title filename <<< "$line"
+            # 해당 카테고리 디렉토리의 모든 마크다운 파일 찾기
+            find "src/content/posts/$category" -type f -name "*.md" | sort | while read file; do
+              # 파일명과 제목 추출
+              filename=$(basename "$file")
+              # 프론트매터에서 제목 추출 시도
+              title=$(grep -A1 "^title:" "$file" | tail -n 1 | sed 's/^title: \?"\(.*\)"/\1/' | sed 's/^"//' | sed 's/"$//')
+              
+              # 제목이 추출되지 않으면 파일명에서 생성
+              if [ -z "$title" ]; then
+                title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
+              fi
+              
               # 파일명에서 확장자 제거 (URL 경로용)
               slug=${filename%.md}
-              # 블로그 URL 생성 (실제 경로 구조에 맞게 수정)
+              # 블로그 URL 생성
               blog_url="https://softourr.github.io/posts/${slug}/"
               
               echo "- [${title}](${blog_url})" >> README.md
@@ -168,7 +172,7 @@ jobs:
           cat README.md
           
           # 임시 파일 삭제
-          rm processed_files.txt category_list.txt
+          rm -f categories.txt
 
       - name: Commit changes
         run: |
