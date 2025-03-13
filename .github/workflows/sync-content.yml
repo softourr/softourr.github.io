@@ -23,6 +23,11 @@ jobs:
           sparse-checkout: |
             Study/Javascript  # 가져올 폴더 경로 (예시)
           sparse-checkout-cone-mode: false
+      - name: Set timezone to KST
+        run: |
+          sudo timedatectl set-timezone Asia/Seoul
+          echo "Current time (KST): $(date)"
+
 
       - name: Create target directory if not exists
         run: |
