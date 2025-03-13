@@ -45,8 +45,12 @@ jobs:
           
           # 마지막 실행 이후 변경된 마크다운 파일 찾기
           cd source-repo
-          CHANGED_FILES=$(git log --since="$LAST_RUN" --name-only --pretty=format: | grep -E "^content/posts/.*\.md$" | sort -u)
+          CHANGED_FILES=$(git log --since="$LAST_RUN" --name-only --pretty=format: | grep -E "^Study/Javascript/.*\.md$" | sort -u)
           cd ..
+
+          # 디버깅을 위해 변경 목록 출력
+          echo "CHANGED_FILES from git log:"
+          echo "$CHANGED_FILES"
           
           if [ -z "$CHANGED_FILES" ]; then
             echo "No files changed since last run"
