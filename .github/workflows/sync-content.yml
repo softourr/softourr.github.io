@@ -70,11 +70,16 @@ jobs:
             # 카테고리 목록에 추가 (중복 없이)
             if [[ ! " ${CATEGORY_LIST[@]} " =~ " ${category} " ]]; then
               CATEGORY_LIST+=("$category")
+              
+              # 카테고리 디렉토리 생성
+              mkdir -p "src/content/posts/$category"
+              echo "카테고리 디렉토리 생성: src/content/posts/$category"
             fi
             
             # 파일명 추출
             filename=$(basename "$src_path")
-            dest_file="src/content/posts/$filename"
+            # 카테고리별 하위 디렉토리에 파일 저장
+            dest_file="src/content/posts/$category/$filename"
             
             # 파일 제목 추출 (확장자 제거)
             title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
@@ -115,6 +120,10 @@ jobs:
           
           # 현재 시간을 타임스탬프 파일에 저장
           date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
+          
+          # 디렉토리 구조 출력 (디버깅용)
+          echo "===== 디렉토리 구조 ====="
+          find src/content/posts -type d | sort
 
       - name: Update README.md
         run: |
