@@ -1,4 +1,4 @@
-name: Sync Content from External Repository
+name: Sync Javascript Content from Obsidian
 
 on:
   workflow_dispatch:  # 수동으로 트리거 가능
@@ -20,150 +20,110 @@ jobs:
           repository: softourr/obsidian  # 소스 레포지토리 경로
           path: source-repo
           token: ${{ secrets.PAT_TOKEN }}
-          sparse-checkout: |
-            Study/Javascript  # 가져올 폴더 경로
-          sparse-checkout-cone-mode: false
+          fetch-depth: 0  # 전체 히스토리 가져오기
 
       - name: Set timezone to KST
         run: |
           sudo timedatectl set-timezone Asia/Seoul
           echo "Current time (KST): $(date)"
 
+      - name: Verify source repository
+        run: |
+          echo "Checking source repository structure..."
+          ls -la source-repo
+          
+          echo "Checking Javascript folder..."
+          find source-repo -path "*/Study/Javascript" -type d || echo "Study/Javascript directory not found"
+          
+          echo "Checking all Markdown files in repository..."
+          find source-repo -name "*.md" | grep -i javascript || echo "No Javascript markdown files found"
+
       - name: Create target directory if not exists
         run: |
-          mkdir -p src/content/posts  # 대상 폴더 (필요에 따라 수정)
-
-      - name: Debug - List source repository content
-        run: |
-          echo "Source repository content:"
-          ls -la source-repo
-          echo "Files in Study/Javascript folder:"
-          find source-repo/Study/Javascript -type f -name "*.md" || echo "No markdown files found"
+          mkdir -p src/content/posts  # 대상 폴더
 
       - name: Copy and process markdown files
         run: |
-          # 마지막 실행 시간 확인용 파일
-          TIMESTAMP_FILE=".last_sync_time"
+          # Study/Javascript 폴더의 마크다운 파일 찾기
+          MARKDOWN_FILES=$(find source-repo/Study/Javascript -name "*.md" || echo "")
           
-          # 마지막 실행 시간 가져오기
-          if [ -f "$TIMESTAMP_FILE" ]; then
-            LAST_RUN=$(cat "$TIMESTAMP_FILE")
-            echo "마지막 동기화 시간 (KST): $LAST_RUN"
-          else
-            # 처음 실행하는 경우 어제 날짜로 설정 (KST 기준)
-            LAST_RUN=$(date -d "yesterday" +"%Y-%m-%d %H:%M:%S")
-            echo "첫 실행 - 기준 시간 설정 (KST): $LAST_RUN"
-          fi
-          
-          # 마지막 실행 이후 변경된 마크다운 파일 찾기
-          cd source-repo
-          echo "Git log 검색 시작 시간: $(date)"
-          
-          # --since 옵션은 기본적으로 로컬 시간대를 사용함 (KST로 설정했으므로 KST 기준으로 동작)
-          CHANGED_FILES=$(git log --since="$LAST_RUN" --name-only --pretty=format: | grep -E "^Study/Javascript/.*\.md$" | sort -u)
-          cd ..
-          
-          # 디버깅을 위해 변경 목록 출력
-          echo "CHANGED_FILES from git log:"
-          echo "$CHANGED_FILES"
-          
-          # 첫 실행 또는 파일을 찾지 못하는 경우 모든 파일 처리 (디버깅용)
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "최근 변경된 파일이 없거나 첫 실행입니다. 모든 마크다운 파일을 확인합니다..."
-            CHANGED_FILES=$(find source-repo/Study/Javascript -name "*.md" | sed 's|^source-repo/||')
-            echo "발견된 모든 마크다운 파일:"
-            echo "$CHANGED_FILES"
-          fi
-          
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "처리할 마크다운 파일이 없습니다."
-          else
-            echo "처리할 파일 목록:"
-            echo "$CHANGED_FILES"
+          if [ -z "$MARKDOWN_FILES" ]; then
+            echo "🔴 마크다운 파일을 찾을 수 없습니다. 소스 경로를 확인하세요."
             
-            # 변경된 각 파일 처리
-            for file in $CHANGED_FILES; do
-              echo "파일 확인 중: source-repo/$file"
-              if [ -f "source-repo/$file" ]; then
-                filename=$(basename "$file")
-                target_file="src/content/posts/$filename"
-                
-                echo "파일 처리 중: $file -> $target_file"
-                
-                # 프론트매터 확인
-                if grep -q "^---" "source-repo/$file"; then
-                  echo "$file에서 프론트매터 발견"
-                  # 기존 프론트매터 제거 후 새 프론트매터 추가
-                  content=$(sed -e '1{/^---$/!q;};1,/^---$/d' "source-repo/$file")
-                  
-                  # 파일 제목 추출 (파일명에서)
-                  title=$(echo "$filename" | sed 's/\.md$//' | sed 's/_/ /g' | sed 's/-/ /g')
-                  
-                  # 수정 날짜 가져오기 (KST 기준)
-                  modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$file")
-                  if [ -z "$modified_date" ]; then
-                    modified_date=$(date +"%Y-%m-%d")
-                  fi
-                  
-                  # 새 프론트매터와 내용 결합
-                  {
-                    echo "---"
-                    echo "title: $title"
-                    echo "published: $modified_date"
-                    echo "tags: [Markdown, Blogging, Demo]"
-                    echo "category: Examples"
-                    echo "draft: true"
-                    echo "---"
-                    echo "$content"
-                  } > "$target_file"
-                else
-                  echo "$file에 프론트매터가 없어 새 프론트매터 추가"
-                  # 프론트매터가 없는 경우 추가
-                  title=$(echo "$filename" | sed 's/\.md$//' | sed 's/_/ /g' | sed 's/-/ /g')
-                  modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$file")
-                  if [ -z "$modified_date" ]; then
-                    modified_date=$(date +"%Y-%m-%d")
-                  fi
-                  
-                  {
-                    echo "---"
-                    echo "title: $title"
-                    echo "published: $modified_date"
-                    echo "tags: [Markdown, Blogging, Demo]"
-                    echo "category: Examples"
-                    echo "draft: true"
-                    echo "---"
-                    cat "source-repo/$file"
-                  } > "$target_file"
-                fi
-                
-                echo "파일 처리 완료: $file -> $target_file"
-              else
-                echo "경고: 파일을 찾을 수 없음: source-repo/$file"
-              fi
-            done
+            # 전체 저장소에서 마크다운 파일 검색 (디버깅용)
+            echo "전체 저장소에서 마크다운 파일 검색:"
+            find source-repo -name "*.md" | head -n 10
+            exit 1
           fi
           
-          # 현재 시간을 타임스탬프 파일에 저장 (KST 기준)
-          date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
-          echo "타임스탬프 파일 업데이트 (KST): $(cat $TIMESTAMP_FILE)"
+          echo "🟢 처리할 마크다운 파일: $(echo "$MARKDOWN_FILES" | wc -l)개"
+          
+          # 각 파일 처리
+          for src_file in $MARKDOWN_FILES; do
+            filename=$(basename "$src_file")
+            dest_file="src/content/posts/$filename"
+            
+            echo "🔄 처리 중: $src_file -> $dest_file"
+            
+            # 파일 제목 추출 (파일명에서)
+            title=$(echo "$filename" | sed 's/\.md$//' | sed 's/_/ /g' | sed 's/-/ /g')
+            
+            # 수정 날짜 가져오기 (KST 기준)
+            modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$src_file" || date +"%Y-%m-%d")
+            
+            # 프론트매터 확인 및 처리
+            if grep -q "^---" "$src_file"; then
+              echo "- 기존 프론트매터 제거 및 새 프론트매터 추가"
+              # 기존 프론트매터 제거 후 새 프론트매터 추가
+              content=$(sed -e '1{/^---$/!q;};1,/^---$/d' "$src_file")
+              
+              {
+                echo "---"
+                echo "title: $title"
+                echo "published: $modified_date"
+                echo "tags: [Javascript, Study]"
+                echo "category: Javascript"
+                echo "draft: true"
+                echo "---"
+                echo "$content"
+              } > "$dest_file"
+            else
+              echo "- 새 프론트매터 추가"
+              # 프론트매터가 없는 경우 추가
+              {
+                echo "---"
+                echo "title: $title"
+                echo "published: $modified_date"
+                echo "tags: [Javascript, Study]"
+                echo "category: Javascript"
+                echo "draft: true"
+                echo "---"
+                cat "$src_file"
+              } > "$dest_file"
+            fi
+            
+            echo "✅ 파일 생성 완료: $dest_file"
+          done
 
       - name: List processed files
         run: |
-          echo "대상 디렉토리의 파일 목록:"
+          echo "생성된 파일 목록:"
           ls -la src/content/posts/
-          echo "대상 디렉토리의 파일 수: $(find src/content/posts -type f | wc -l)"
+          echo "총 파일 수: $(find src/content/posts -type f | wc -l)"
 
       - name: Commit changes if any
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git add src/content/posts/ .last_sync_time
+          git add src/content/posts/
+          
+          # 변경사항 확인
+          git status
           
           if git diff --staged --quiet; then
             echo "커밋할 변경사항이 없습니다"
           else
-            git commit -m "외부 레포지토리에서 콘텐츠 동기화 (KST: $(date +"%Y-%m-%d %H:%M:%S"))"
+            git commit -m "Obsidian Javascript 학습 노트 동기화 (KST: $(date +"%Y-%m-%d %H:%M:%S"))"
             git push
-            echo "변경사항을 성공적으로 커밋하고 푸시했습니다"
+            echo "✅ 변경사항을 성공적으로 커밋하고 푸시했습니다"
           fi
