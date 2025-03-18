@@ -104,6 +104,7 @@ jobs:
             fi
             
             echo "✅ 생성 완료: $dest_file (카테고리: $category)"
+            echo "✅ published: $modified_date"
           done
           
           # 현재 시간을 타임스탬프 파일에 저장
