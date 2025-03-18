@@ -1,9 +1,16 @@
 .custom-md {
+    /* 기본 줄 간격 설정 */
+    @apply leading-tight;
+    p {
+        @apply my-4;
+    }
+    
     h1 {
         @apply text-2xl;
     }
     h1, h2 {
-        @apply bg-gray-800 px-1 py-2 rounded-md;
+        @apply px-1 py-2 rounded-md mt-8;
+        @apply dark:bg-gray-800; /* 다크 모드에서만 배경색 적용 */
     }
     h3 {
         @apply border-b border-gray-300/20 pb-1 mb-4;
