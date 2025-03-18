@@ -20,6 +20,7 @@ jobs:
           repository: softourr/obsidian
           path: source-repo
           token: ${{ secrets.PAT_TOKEN }}
+          fetch-depth: 0
 
       - name: Set up environment
         run: |
@@ -79,32 +80,17 @@ jobs:
             # 파일 제목 추출 (확장자 제거)
             title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
 
-            # 날짜 처리 중
-            echo "Git 커밋 메시지에서 백업 날짜 추출 시도:"
-            commit_message=$(git -C source-repo log -1 --pretty=format:"%s" -- "$rel_path" 2>/dev/null)
-            echo "커밋 메시지: $commit_message"
-            
-            if [[ "$commit_message" == *"vault backup:"* ]]; then
-              backup_date=$(echo "$commit_message" | sed -n 's/.*vault backup: \([0-9-]* [0-9:]*\).*/\1/p')
-              if [ -n "$backup_date" ]; then
-                echo "커밋 메시지에서 찾은 백업 날짜: $backup_date"
-                # 날짜 포맷 정리 (시간 부분 제거)
-                modified_date=$(echo "$backup_date" | cut -d' ' -f1)
-                echo "사용할 날짜: $modified_date"
-              else
-                echo "커밋 메시지에서 날짜 형식을 파싱할 수 없습니다. Git 커밋 날짜 사용."
-                modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
-              fi
-            else
-              echo "커밋 메시지에 'vault backup:' 패턴이 없습니다. Git 커밋 날짜 사용."
-              modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
-            fi
-            
+            # 날짜 처리
+            modified_date=$(git -C source-repo log -1 --follow --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
+
+            # 날짜를 가져오지 못했다면 현재 날짜 사용
             if [ -z "$modified_date" ]; then
-              echo "날짜를 추출할 수 없습니다. 현재 날짜 사용."
+              echo "✅ 날짜 정보 못 가져와서 오늘 날짜 쓴다"
               modified_date=$(date +"%Y-%m-%d")
             fi
             
+            echo "✅ 마지막 변경 날짜: $modified_date"
+
             # 프론트매터 생성 및 파일 복사
             echo "---" > "$dest_file"
             echo "title: \"$title\"" >> "$dest_file"
