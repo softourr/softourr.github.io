@@ -1,6 +1,12 @@
 .custom-md {
     h1 {
-        @apply text-3xl;
+        @apply text-2xl;
+    }
+    h1, h2 {
+        @apply bg-gray-800 px-1 py-2 rounded-md;
+    }
+    h3 {
+        @apply border-b border-gray-300/20 pb-1 mb-4;
     }
 
     h1, h2, h3, h4, h5, h6 {
