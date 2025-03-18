@@ -78,10 +78,30 @@ jobs:
             
             # 파일 제목 추출 (확장자 제거)
             title=$(basename "$filename" .md | sed 's/_/ /g' | sed 's/-/ /g')
+
+            # 날짜 처리 중
+            echo "Git 커밋 메시지에서 백업 날짜 추출 시도:"
+            commit_message=$(git -C source-repo log -1 --pretty=format:"%s" -- "$rel_path" 2>/dev/null)
+            echo "커밋 메시지: $commit_message"
             
-            # 수정 날짜 가져오기
-            modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
+            if [[ "$commit_message" == *"vault backup:"* ]]; then
+              backup_date=$(echo "$commit_message" | sed -n 's/.*vault backup: \([0-9-]* [0-9:]*\).*/\1/p')
+              if [ -n "$backup_date" ]; then
+                echo "커밋 메시지에서 찾은 백업 날짜: $backup_date"
+                # 날짜 포맷 정리 (시간 부분 제거)
+                modified_date=$(echo "$backup_date" | cut -d' ' -f1)
+                echo "사용할 날짜: $modified_date"
+              else
+                echo "커밋 메시지에서 날짜 형식을 파싱할 수 없습니다. Git 커밋 날짜 사용."
+                modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
+              fi
+            else
+              echo "커밋 메시지에 'vault backup:' 패턴이 없습니다. Git 커밋 날짜 사용."
+              modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
+            fi
+            
             if [ -z "$modified_date" ]; then
+              echo "날짜를 추출할 수 없습니다. 현재 날짜 사용."
               modified_date=$(date +"%Y-%m-%d")
             fi
             
@@ -104,29 +124,6 @@ jobs:
             fi
             
             echo "✅ 생성 완료: $dest_file (카테고리: $category)"
-            # 테스트 중
-            # 상대 경로 추출
-            rel_path="${src_path#source-repo/}"
-            echo "상대 경로: $rel_path"
-            
-            # 파일이 실제로 존재하는지 확인
-            if [ -f "source-repo/$rel_path" ]; then
-              echo "파일 확인: 존재함"
-            else
-              echo "파일 확인: 존재하지 않음"
-            fi
-            
-            # Git 로그 테스트 (직접 명령어 실행)
-            echo "Git 로그 테스트 (전체 경로):"
-            git -C source-repo log -1 --pretty=format:"%ad" --date=format:"%Y-%m-%d" -- "$rel_path"
-            echo ""
-            
-            # 수정 날짜 가져오기
-            modified_date=$(git -C source-repo log -1 --format=%ad --date=format:"%Y-%m-%d" -- "$rel_path" 2>/dev/null)
-            if [ -z "$modified_date" ]; then
-              echo "Git에서 날짜를 가져오지 못했습니다. 현재 날짜 사용."
-              modified_date=$(date +"%Y-%m-%d")
-            fi
             echo "✅ published: $modified_date"
           done
           
