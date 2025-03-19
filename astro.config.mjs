@@ -21,6 +21,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'static', // 사이트맵 생성안되서 수정
   site: "https://softourr.vercel.app/", // 내걸로 수정
   base: "/",
   trailingSlash: "always",
