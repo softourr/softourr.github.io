@@ -17,3 +17,6 @@ export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5
 
 // Page width: rem 75 basic
 export const PAGE_WIDTH = 80
+
+// License postUrl
+export const licensePostUrl = "https://github.com/softourr/softourr.github.io"
