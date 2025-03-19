@@ -99,14 +99,13 @@ jobs:
             echo "category: $category" >> "$dest_file"
             echo "draft: false" >> "$dest_file"
             echo "---" >> "$dest_file"
-            
-            # 기존 프론트매터가 있으면 제거하고 내용만 추가
-            if grep -q "^---" "$src_path"; then
-              # 프론트매터 제거하고 내용만 추출
-              sed -e '1{/^---$/!q;};1,/^---$/d' "$src_path" >> "$dest_file"
-            else
-              # 프론트매터 없으면 전체 내용 추가
-              cat "$src_path" >> "$dest_file"
+
+            # 옵시디언 마크다운 파일의 본문을 직접 복사
+            cat "$src_path" >> "$dest_file"
+            # 빈 파일 예외 처리
+            if [ ! -s "$dest_file" ]; then
+              echo "⚠️ 경고: $dest_file 이(가) 비어 있습니다. 기본 텍스트 추가."
+              echo "본문이 없습니다. 내용을 확인해주세요." >> "$dest_file"
             fi
             
             echo "✅ 생성 완료: $dest_file (카테고리: $category)"
