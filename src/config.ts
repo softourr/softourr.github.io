@@ -9,7 +9,7 @@ import { LinkPreset } from './types/config'
 export const siteConfig: SiteConfig = {
   title: 'Akashic Records',
   subtitle: '🪽',
-  lang: 'ko',         // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko', 'es', 'th'
+  lang: 'en',         // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko', 'es', 'th'
   themeColor: {
     hue: 260,         // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
     fixed: false,     // Hide the theme color picker for visitors
@@ -40,14 +40,19 @@ export const siteConfig: SiteConfig = {
 export const navBarConfig: NavBarConfig = {
   links: [
     LinkPreset.Home,
+    {
+      name: 'Cheat-Sheet',
+      url: `/archive/category/Cheat-Sheet/`,
+      external: false,                   
+    },
     LinkPreset.Archive,
     LinkPreset.About,
-    // {
-    // 이런식으롤 커스텀 링크 추가 가능
-    //   name: 'GitHub',
-    //   url: 'https://github.com/saicaca/fuwari',     // Internal links should not include the base path, as it is automatically added
-    //   external: true,                               // Show an external link icon and will open in a new tab
-    // },
+    {
+      name: 'github.io',
+      url: 'https://github.com/softourr/softourr.github.io/blob/main/README.md',  
+      external: true,                               // Show an external link icon and will open in a new tab
+    },
+    
   ],
 }
 
