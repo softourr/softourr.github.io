@@ -1,11 +1,16 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-03-25 15:08:20
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-03-25 16:05:41
 
 ## 목차
 
+- [Cheat-Sheet](#cheat-sheet)
 - [Javascript](#javascript)
 
+
+## Cheat-Sheet
+
+- [자바스크립트 개념 키워드 정리](https://softourr.github.io/posts/cheat-sheet/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EA%B0%9C%EB%85%90-%ED%82%A4%EC%9B%8C%EB%93%9C-%EC%A0%95%EB%A6%AC/)
 
 ## Javascript
 
