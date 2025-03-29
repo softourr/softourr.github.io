@@ -40,6 +40,11 @@ export const siteConfig: SiteConfig = {
 export const navBarConfig: NavBarConfig = {
   links: [
     LinkPreset.Home,
+        {
+      name: 'F&Q',
+      url: `/archive/category/FEQ/`,
+      external: false,                   
+    },
     {
       name: 'Cheat-Sheet',
       url: `/archive/category/Cheat-Sheet/`,
