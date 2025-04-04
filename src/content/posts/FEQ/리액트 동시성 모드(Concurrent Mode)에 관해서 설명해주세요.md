@@ -1,6 +1,6 @@
 ---
 title: "리액트 동시성 모드(Concurrent Mode)에 관해서 설명해주세요"
-published: 2025-04-03
+published: 2025-04-04
 tags: [FEQ, Study]
 category: FEQ
 draft: false
@@ -8,7 +8,7 @@ draft: false
 " 프론트엔드 매일메일 81번 문제입니다. [참고 React 18 Concurrent Rendering - dev_hee](https://velog.io/@heelieben/React-18-Concurrent-Rendering)
 
 [[비동기 개념 이해하기]]
-동시성 모드를 알기 위해서는 먼저 비동기 처리에 대해 알아야 합니다.
+- 동시성 모드를 알기 위해서는 먼저 비동기 처리에 대해 알아야 합니다.
 
 1
 리액트의 동시성 모드란 비동기적으로 작업을 처리하는 와중에!
