@@ -215,6 +215,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "커밋할 변경사항이 없습니다"
           else
-            git commit -m "Obsidian Study 동기화 및 README 업데이트 ($(date +"%Y-%m-%d %H:%M:%S"))"
+            git commit -m "($(date +"%Y-%m-%d %H:%M:%S"))"
             git push
           fi
