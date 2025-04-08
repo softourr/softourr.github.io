@@ -1,14 +1,14 @@
 ---
 title: "CORS(Cross Origin Resource Sharing)는 무엇이며 왜 필요한가"
-published: 2025-04-05
+published: 2025-04-08
 tags: [FEQ, Study]
 category: FEQ
 draft: false
 ---
 " 프론트엔드 매일메일 78번 문제입니다.
-🪧 참고
-- [CORS는 왜 이렇게 우리를 힘들게 하는걸까?](https://evan-moon.github.io/2020/05/21/about-cors/)
-- [결제창에서 CORS 대응하기](https://docs.tosspayments.com/blog/payment-window-cors-error)
+- 🪧 참고
+	- [CORS는 왜 이렇게 우리를 힘들게 하는걸까?](https://evan-moon.github.io/2020/05/21/about-cors/)
+	- [결제창에서 CORS 대응하기](https://docs.tosspayments.com/blog/payment-window-cors-error)
 ---
 ## CORS 기본 개념 정리
 영어 단어 그대로 서로 다른(cross) 출처(origin)에서 제공되는 리소스에 접근할 수 있도록 공유를 허용하는 정책입니다.
