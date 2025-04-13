@@ -1,6 +1,6 @@
 ---
 title: "CORS(Cross Origin Resource Sharing)는 무엇이며 왜 필요한가"
-published: 2025-04-08
+published: 2025-04-14
 tags: [FEQ, Study]
 category: FEQ
 draft: false
@@ -10,6 +10,8 @@ draft: false
 	- [CORS는 왜 이렇게 우리를 힘들게 하는걸까?](https://evan-moon.github.io/2020/05/21/about-cors/)
 	- [결제창에서 CORS 대응하기](https://docs.tosspayments.com/blog/payment-window-cors-error)
 ---
+![](https://i.imgur.com/xZ19AZd.png)
+
 ## CORS 기본 개념 정리
 영어 단어 그대로 서로 다른(cross) 출처(origin)에서 제공되는 리소스에 접근할 수 있도록 공유를 허용하는 정책입니다.
 브라우저는 기본적으로 보안 상의 이유로 `SOP`(Same-Origin Policy, 동일 출처 정책)가 적용됩니다. 다른 출처에서 제공되는 것이면 "브라우저"가 이를 차단합니다.
