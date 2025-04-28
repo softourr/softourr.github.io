@@ -1,9 +1,10 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-04-28 09:26:38
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-04-28 15:13:31
 
 ## 목차
 
+- [BEQ](#beq)
 - [Cheat-Sheet](#cheat-sheet)
 - [FEQ](#feq)
 - [Javascript](#javascript)
@@ -12,6 +13,10 @@
 - [React](#react)
 - [img](#img)
 
+
+## BEQ
+
+- [RabbitMQ와 Kafka를 비교했을 때, 두 메시지 큐 시스템 간의 차이점은 무엇인가요](https://softourr.github.io/posts/beq/RabbitMQ%EC%99%80-Kafka%EB%A5%BC-%EB%B9%84%EA%B5%90%ED%96%88%EC%9D%84-%EB%95%8C%2C-%EB%91%90-%EB%A9%94%EC%8B%9C%EC%A7%80-%ED%81%90-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EA%B0%84%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%EC%9A%94/)
 
 ## Cheat-Sheet
 
@@ -24,6 +29,7 @@
 - [CORS(Cross Origin Resource Sharing)는 무엇이며 왜 필요한가](https://softourr.github.io/posts/feq/CORS%28Cross-Origin-Resource-Sharing%29%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%99%9C-%ED%95%84%EC%9A%94%ED%95%9C%EA%B0%80/)
 - [HTML의 기본 폼 요소 중에서 input 요소의 type 속성에 따라 동작 방식이 어떻게 달라지는지 설명해주세요.](https://softourr.github.io/posts/feq/HTML%EC%9D%98-%EA%B8%B0%EB%B3%B8-%ED%8F%BC-%EC%9A%94%EC%86%8C-%EC%A4%91%EC%97%90%EC%84%9C-input-%EC%9A%94%EC%86%8C%EC%9D%98-type-%EC%86%8D%EC%84%B1%EC%97%90-%EB%94%B0%EB%9D%BC-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9D%EC%9D%B4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8B%AC%EB%9D%BC%EC%A7%80%EB%8A%94%EC%A7%80-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [Next.js에서 Incremental Static Regeneration (ISR)이 무엇인지 설명해주세요.](https://softourr.github.io/posts/feq/Next.js%EC%97%90%EC%84%9C-Incremental-Static-Regeneration-%28ISR%29%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B8%EC%A7%80-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
+- [Nginx와 웹서버, WAS](https://softourr.github.io/posts/feq/Nginx%EC%99%80-%EC%9B%B9%EC%84%9C%EB%B2%84%2C-WAS/)
 - [Promise의 resolve()와 fulfilled에 대해서 설명해주세요.](https://softourr.github.io/posts/feq/Promise%EC%9D%98-resolve%28%29%EC%99%80-fulfilled%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [TypeScript에서 interface와 type의 차이점에 대해 설명해주세요.](https://softourr.github.io/posts/feq/TypeScript%EC%97%90%EC%84%9C-interface%EC%99%80-type%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%97%90-%EB%8C%80%ED%95%B4-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [TypeScript에서 유니온 타입과 인터섹션 타입의 차이를 설명해주세요.](https://softourr.github.io/posts/feq/TypeScript%EC%97%90%EC%84%9C-%EC%9C%A0%EB%8B%88%EC%98%A8-%ED%83%80%EC%9E%85%EA%B3%BC-%EC%9D%B8%ED%84%B0%EC%84%B9%EC%85%98-%ED%83%80%EC%9E%85%EC%9D%98-%EC%B0%A8%EC%9D%B4%EB%A5%BC-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
