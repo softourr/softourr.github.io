@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-05-04 15:07:33
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-05-04 21:09:14
 
 ## 목차
 
@@ -31,6 +31,7 @@
 - [Next.js에서 Incremental Static Regeneration (ISR)이 무엇인지 설명해주세요.](https://softourr.github.io/posts/feq/Next.js%EC%97%90%EC%84%9C-Incremental-Static-Regeneration-%28ISR%29%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B8%EC%A7%80-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [Nginx와 웹서버, WAS](https://softourr.github.io/posts/feq/Nginx%EC%99%80-%EC%9B%B9%EC%84%9C%EB%B2%84%2C-WAS/)
 - [Promise의 resolve()와 fulfilled에 대해서 설명해주세요.](https://softourr.github.io/posts/feq/Promise%EC%9D%98-resolve%28%29%EC%99%80-fulfilled%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
+- [React의 reconciliation 과정에 대해 설명해 주세요. React가 어떤 방식으로 DOM 업데이트를 최소화하는지 알고 계신가요?](https://softourr.github.io/posts/feq/React%EC%9D%98-reconciliation-%EA%B3%BC%EC%A0%95%EC%97%90-%EB%8C%80%ED%95%B4-%EC%84%A4%EB%AA%85%ED%95%B4-%EC%A3%BC%EC%84%B8%EC%9A%94.-React%EA%B0%80-%EC%96%B4%EB%96%A4-%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C-DOM-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8%EB%A5%BC-%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%8A%94%EC%A7%80-%EC%95%8C%EA%B3%A0-%EA%B3%84%EC%8B%A0%EA%B0%80%EC%9A%94%3F/)
 - [TypeScript에서 interface와 type의 차이점에 대해 설명해주세요.](https://softourr.github.io/posts/feq/TypeScript%EC%97%90%EC%84%9C-interface%EC%99%80-type%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%97%90-%EB%8C%80%ED%95%B4-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [TypeScript에서 유니온 타입과 인터섹션 타입의 차이를 설명해주세요.](https://softourr.github.io/posts/feq/TypeScript%EC%97%90%EC%84%9C-%EC%9C%A0%EB%8B%88%EC%98%A8-%ED%83%80%EC%9E%85%EA%B3%BC-%EC%9D%B8%ED%84%B0%EC%84%B9%EC%85%98-%ED%83%80%EC%9E%85%EC%9D%98-%EC%B0%A8%EC%9D%B4%EB%A5%BC-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [localStorage와 sessionStorage의 차이점에 대해서 설명해주세요.](https://softourr.github.io/posts/feq/localStorage%EC%99%80-sessionStorage%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
