@@ -215,6 +215,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "커밋할 변경사항이 없습니다"
           else
-            git commit -m "($(date +"%Y-%m-%d %H:%M:%S"))"
+            git commit -m "$(date +"%Y-%m-%d %H:%M:%S")"
             git push
           fi
