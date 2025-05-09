@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-05-09 21:09:46
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-05-10 03:07:41
 
 ## 목차
 
@@ -26,6 +26,7 @@
 
 ## FEQ
 
+- [CORS 설정 없이 SOP를 우회하여 외부 서버와 통신할 수 있는 방법이 있을까요](https://softourr.github.io/posts/feq/CORS-%EC%84%A4%EC%A0%95-%EC%97%86%EC%9D%B4-SOP%EB%A5%BC-%EC%9A%B0%ED%9A%8C%ED%95%98%EC%97%AC-%EC%99%B8%EB%B6%80-%EC%84%9C%EB%B2%84%EC%99%80-%ED%86%B5%EC%8B%A0%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%B0%A9%EB%B2%95%EC%9D%B4-%EC%9E%88%EC%9D%84%EA%B9%8C%EC%9A%94/)
 - [CORS(Cross Origin Resource Sharing)는 무엇이며 왜 필요한가](https://softourr.github.io/posts/feq/CORS%28Cross-Origin-Resource-Sharing%29%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%99%9C-%ED%95%84%EC%9A%94%ED%95%9C%EA%B0%80/)
 - [HTML의 기본 폼 요소 중에서 input 요소의 type 속성에 따라 동작 방식이 어떻게 달라지는지 설명해주세요.](https://softourr.github.io/posts/feq/HTML%EC%9D%98-%EA%B8%B0%EB%B3%B8-%ED%8F%BC-%EC%9A%94%EC%86%8C-%EC%A4%91%EC%97%90%EC%84%9C-input-%EC%9A%94%EC%86%8C%EC%9D%98-type-%EC%86%8D%EC%84%B1%EC%97%90-%EB%94%B0%EB%9D%BC-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9D%EC%9D%B4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8B%AC%EB%9D%BC%EC%A7%80%EB%8A%94%EC%A7%80-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [Next.js에서 Incremental Static Regeneration (ISR)이 무엇인지 설명해주세요.](https://softourr.github.io/posts/feq/Next.js%EC%97%90%EC%84%9C-Incremental-Static-Regeneration-%28ISR%29%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B8%EC%A7%80-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
