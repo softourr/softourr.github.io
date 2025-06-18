@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-06-18 21:11:22
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-06-19 00:16:54
 
 ## 목차
 
@@ -8,6 +8,7 @@
 - [Cheat-Sheet](#cheat-sheet)
 - [FEQ](#feq)
 - [Javascript](#javascript)
+- [Lab](#lab)
 - [Next](#next)
 - [ProjectCamp_Nextjs](#projectcamp_nextjs)
 - [React](#react)
@@ -52,6 +53,10 @@
 - [프로토타입 객체지향 언어인 자바스크립트](https://softourr.github.io/posts/javascript/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5-%EC%96%B8%EC%96%B4%EC%9D%B8-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/)
 - [호이호이 호이스팅 정리](https://softourr.github.io/posts/javascript/%ED%98%B8%EC%9D%B4%ED%98%B8%EC%9D%B4-%ED%98%B8%EC%9D%B4%EC%8A%A4%ED%8C%85-%EC%A0%95%EB%A6%AC/)
 
+## Lab
+
+- [make와 notion 연동해서 데일리 루틴 자동화하기](https://softourr.github.io/posts/lab/make%EC%99%80-notion-%EC%97%B0%EB%8F%99%ED%95%B4%EC%84%9C-%EB%8D%B0%EC%9D%BC%EB%A6%AC-%EB%A3%A8%ED%8B%B4-%EC%9E%90%EB%8F%99%ED%99%94%ED%95%98%EA%B8%B0/)
+
 ## Next
 
 - [Next.js의 CSR, SSR, ISR](https://softourr.github.io/posts/next/Next.js%EC%9D%98-CSR%2C-SSR%2C-ISR/)
@@ -78,6 +83,7 @@
 
 - [(todo) React의 선언형 프로그래밍](https://softourr.github.io/posts/react/%28todo%29-React%EC%9D%98-%EC%84%A0%EC%96%B8%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/)
 - [(todo) 리액트 18의 주요 업데이트   동시성 모드, Automatic Batching 등](https://softourr.github.io/posts/react/%28todo%29-%EB%A6%AC%EC%95%A1%ED%8A%B8-18%EC%9D%98-%EC%A3%BC%EC%9A%94-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8---%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AA%A8%EB%93%9C%2C-Automatic-Batching-%EB%93%B1/)
+- [React의 선언형 프로그래밍](https://softourr.github.io/posts/react/React%EC%9D%98-%EC%84%A0%EC%96%B8%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/)
 
 ## img
 
