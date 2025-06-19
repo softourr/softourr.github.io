@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-06-19 09:27:10
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-06-19 15:08:37
 
 ## 목차
 
@@ -43,6 +43,7 @@
 - [리액트 동시성 모드(Concurrent Mode)에 관해서 설명해주세요](https://softourr.github.io/posts/feq/%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AA%A8%EB%93%9C%28Concurrent-Mode%29%EC%97%90-%EA%B4%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94/)
 - [이벤트 버블링과 캡처링에 대해 설명해주세요.](https://softourr.github.io/posts/feq/%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%B2%84%EB%B8%94%EB%A7%81%EA%B3%BC-%EC%BA%A1%EC%B2%98%EB%A7%81%EC%97%90-%EB%8C%80%ED%95%B4-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [자바스크립트 언어에 대해 설명해주세요.](https://softourr.github.io/posts/feq/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%96%B8%EC%96%B4%EC%97%90-%EB%8C%80%ED%95%B4-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
+- [테스트하기 좋은 코드, 코드 리뷰의 기준 잡기](https://softourr.github.io/posts/feq/%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0-%EC%A2%8B%EC%9D%80-%EC%BD%94%EB%93%9C%2C-%EC%BD%94%EB%93%9C-%EB%A6%AC%EB%B7%B0%EC%9D%98-%EA%B8%B0%EC%A4%80-%EC%9E%A1%EA%B8%B0/)
 
 ## Javascript
 
