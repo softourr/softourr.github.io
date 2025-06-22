@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-06-22 15:08:03
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-06-22 21:09:26
 
 ## 목차
 
@@ -31,6 +31,7 @@
 - [CORS(Cross Origin Resource Sharing)는 무엇이며 왜 필요한가](https://softourr.github.io/posts/feq/CORS%28Cross-Origin-Resource-Sharing%29%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%99%9C-%ED%95%84%EC%9A%94%ED%95%9C%EA%B0%80/)
 - [HTML의 기본 폼 요소 중에서 input 요소의 type 속성에 따라 동작 방식이 어떻게 달라지는지 설명해주세요.](https://softourr.github.io/posts/feq/HTML%EC%9D%98-%EA%B8%B0%EB%B3%B8-%ED%8F%BC-%EC%9A%94%EC%86%8C-%EC%A4%91%EC%97%90%EC%84%9C-input-%EC%9A%94%EC%86%8C%EC%9D%98-type-%EC%86%8D%EC%84%B1%EC%97%90-%EB%94%B0%EB%9D%BC-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9D%EC%9D%B4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8B%AC%EB%9D%BC%EC%A7%80%EB%8A%94%EC%A7%80-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [Next.js에서 Incremental Static Regeneration (ISR)이 무엇인지 설명해주세요.](https://softourr.github.io/posts/feq/Next.js%EC%97%90%EC%84%9C-Incremental-Static-Regeneration-%28ISR%29%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B8%EC%A7%80-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
+- [Nginx란, 웹서버 개념이해](https://softourr.github.io/posts/feq/Nginx%EB%9E%80%2C-%EC%9B%B9%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%85%90%EC%9D%B4%ED%95%B4/)
 - [Nginx와 웹서버, WAS](https://softourr.github.io/posts/feq/Nginx%EC%99%80-%EC%9B%B9%EC%84%9C%EB%B2%84%2C-WAS/)
 - [Promise의 resolve()와 fulfilled에 대해서 설명해주세요.](https://softourr.github.io/posts/feq/Promise%EC%9D%98-resolve%28%29%EC%99%80-fulfilled%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94./)
 - [React 프로젝트에서 유틸 함수(utility function)를 어떤 기준으로 분리하고 관리하나요.](https://softourr.github.io/posts/feq/React-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90%EC%84%9C-%EC%9C%A0%ED%8B%B8-%ED%95%A8%EC%88%98%28utility-function%29%EB%A5%BC-%EC%96%B4%EB%96%A4-%EA%B8%B0%EC%A4%80%EC%9C%BC%EB%A1%9C-%EB%B6%84%EB%A6%AC%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EB%82%98%EC%9A%94./)
