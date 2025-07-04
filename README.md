@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-07-04 09:26:52
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-07-04 15:09:07
 
 ## 목차
 
@@ -85,6 +85,7 @@
 
 - [(todo) React의 선언형 프로그래밍](https://softourr.github.io/posts/react/%28todo%29-React%EC%9D%98-%EC%84%A0%EC%96%B8%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/)
 - [(todo) 리액트 18의 주요 업데이트   동시성 모드, Automatic Batching 등](https://softourr.github.io/posts/react/%28todo%29-%EB%A6%AC%EC%95%A1%ED%8A%B8-18%EC%9D%98-%EC%A3%BC%EC%9A%94-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8---%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AA%A8%EB%93%9C%2C-Automatic-Batching-%EB%93%B1/)
+- [React) 리액트에서 SOLID의 OCP(Open Closed) 적용에 대하여](https://softourr.github.io/posts/react/React%29-%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-SOLID%EC%9D%98-OCP%28Open-Closed%29-%EC%A0%81%EC%9A%A9%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/)
 - [React의 선언형 프로그래밍](https://softourr.github.io/posts/react/React%EC%9D%98-%EC%84%A0%EC%96%B8%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/)
 
 ## img
