@@ -1,6 +1,6 @@
 ---
 title: "Nginx란, 웹서버 개념이해"
-published: 2025-06-22
+published: 2025-07-15
 tags: [FEQ, Study]
 category: FEQ
 draft: false
@@ -38,7 +38,7 @@ js 돌아가면? 실시간으로 소통...까진 아니여도 (실시간할라�
 - 브라우저와 서버가 통신하려면 이 프토로콜을 따라야 한다.
 > 웹서버와 WAS 모두 웹에서 서버와 통신하는 과정이므로 HTTP 프로토콜을 따른다.
 
-:::note
+::: note
 웹서버는 정적 파일 서빙 + 리버스 프록시 + 로드 밸런싱 역할을 한다. Nginx, Apache가 대표적이다.
 :::
 
