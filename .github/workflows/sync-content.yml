@@ -35,6 +35,17 @@ jobs:
         run: |
           mkdir -p src/content/posts
 
+      - name: Save existing file list
+        run: |
+          # 기존 파일 목록을 저장
+          if [ -d "src/content/posts" ]; then
+            find src/content/posts -type f -name "*.md" | sort > /tmp/existing_files.txt
+          else
+            touch /tmp/existing_files.txt
+          fi
+          echo "기존 파일 목록:"
+          cat /tmp/existing_files.txt
+
       - name: Sync markdown files
         run: |
           # 마지막 실행 시간 확인
@@ -137,6 +148,9 @@ jobs:
               print(encoded)
           EOL
           
+          # 현재 파일 목록 저장
+          find src/content/posts -type f -name "*.md" | sort > /tmp/current_files.txt
+          
           # guide 폴더 제외하고 모든 카테고리 찾기
           CATEGORIES=$(find src/content/posts -mindepth 1 -maxdepth 1 -type d -not -name "guide" | sort | xargs -n 1 basename)
           echo "발견된 카테고리: $CATEGORIES"
@@ -167,8 +181,10 @@ jobs:
           for category in $CATEGORIES; do
             echo -e "\n## ${category}\n" >> README.md
             
-            # 해당 카테고리 디렉토리의 모든 마크다운 파일 찾기
-            category_files=$(find "src/content/posts/$category" -type f -name "*.md" | sort)
+            # 해당 카테고리 디렉토리의 모든 마크다운 파일 찾기 (published 날짜로 정렬)
+            category_files=$(find "src/content/posts/$category" -type f -name "*.md" -exec grep -l "^published:" {} \; | \
+              xargs -I {} sh -c 'echo "$(grep "^published:" "{}" | cut -d" " -f2) {}"' | \
+              sort -r | cut -d" " -f2-)
             
             if [ -z "$category_files" ]; then
               echo "⚠️ $category 카테고리에 마크다운 파일이 없습니다."
@@ -197,8 +213,14 @@ jobs:
               # 개별 글 URL 생성 - 카테고리와 인코딩된 슬러그 사용
               post_url="https://softourr.github.io/posts/${category,,}/${encoded_slug}/"
               
-              echo "- [${title}](${post_url})" >> README.md
-              echo "  ✅ 링크 생성: $title -> $post_url"
+              # 새 파일인지 확인
+              new_indicator=""
+              if ! grep -q "^$file$" /tmp/existing_files.txt 2>/dev/null; then
+                new_indicator=" +"
+              fi
+              
+              echo "- [${title}](${post_url})${new_indicator}" >> README.md
+              echo "  ✅ 링크 생성: $title -> $post_url${new_indicator}"
             done
           done
           
