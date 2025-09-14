@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-09-10 15:44:12
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-09-14 09:04:44
 
 ## 목차
 
@@ -85,8 +85,7 @@
 
 ## React
 
-- [React의 Error Boundary는 왜 비동기 에러를 잡지 못하나요?](https://softourr.github.io/posts/react/React%EC%9D%98-Error-Boundary%EB%8A%94-%EC%99%9C-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%97%90%EB%9F%AC%EB%A5%BC-%EC%9E%A1%EC%A7%80-%EB%AA%BB%ED%95%98%EB%82%98%EC%9A%94%3F/)
-- [React의 Error Boundary는 왜 비동기 에러를 잡지 못하나요](https://softourr.github.io/posts/react/React%EC%9D%98-Error-Boundary%EB%8A%94-%EC%99%9C-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%97%90%EB%9F%AC%EB%A5%BC-%EC%9E%A1%EC%A7%80-%EB%AA%BB%ED%95%98%EB%82%98%EC%9A%94/) +
+- [React의 Error Boundary는 왜 비동기 에러를 잡지 못하나요](https://softourr.github.io/posts/react/React%EC%9D%98-Error-Boundary%EB%8A%94-%EC%99%9C-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%97%90%EB%9F%AC%EB%A5%BC-%EC%9E%A1%EC%A7%80-%EB%AA%BB%ED%95%98%EB%82%98%EC%9A%94/)
 - [React) 리액트에서 SOLID의 OCP(Open Closed) 적용에 대하여](https://softourr.github.io/posts/react/React%29-%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-SOLID%EC%9D%98-OCP%28Open-Closed%29-%EC%A0%81%EC%9A%A9%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/)
 - [React의 선언형 프로그래밍](https://softourr.github.io/posts/react/React%EC%9D%98-%EC%84%A0%EC%96%B8%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/)
 - [(todo) React의 선언형 프로그래밍](https://softourr.github.io/posts/react/%28todo%29-React%EC%9D%98-%EC%84%A0%EC%96%B8%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/)
