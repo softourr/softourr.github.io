@@ -46,17 +46,27 @@ export const navBarConfig: NavBarConfig = {
       external: false,                   
     },
     {
-      name: 'Cheat-Sheet',
-      url: `/archive/category/Cheat-Sheet/`,
+      name: 'React',
+      url: `/archive/category/React/`,
+      external: false,                   
+    },
+    {
+      name: 'Next',
+      url: `/archive/category/Next/`,
+      external: false,                   
+    },
+     {
+      name: 'Javascript',
+      url: `/archive/category/Javascript/`,
       external: false,                   
     },
     LinkPreset.Archive,
     LinkPreset.About,
-    {
-      name: 'github.io',
-      url: 'https://github.com/softourr/softourr.github.io/blob/main/README.md',  
-      external: true,                               // Show an external link icon and will open in a new tab
-    },
+    // {
+    //   name: 'github.io',
+    //   url: 'https://github.com/softourr/softourr.github.io',  
+    //   external: true,                               // Show an external link icon and will open in a new tab
+    // },
     
   ],
 }

@@ -4,7 +4,7 @@ published: 2024-06-22
 description: "Next.js의 디렉토리 구조잡기"
 image: "./img/pigeon.gif"
 tags: [Next.js]
-category: Frontend
+category: Next
 draft: false
 ---
 

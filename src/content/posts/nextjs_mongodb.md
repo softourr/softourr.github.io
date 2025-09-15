@@ -4,7 +4,7 @@ published: 2024-06-22
 description: "Next.js에서 mongoDB 사용해서 간단한 로그인 APP 만들기"
 image: "./img/monkey.gif"
 tags: [Next.js]
-category: Frontend
+category: Next
 draft: false
 ---
 

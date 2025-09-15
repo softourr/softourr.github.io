@@ -4,7 +4,7 @@ published: 2024-06-11
 description: "Next.js 캐싱 매커니즘과 Request Memoization, Data Cache"
 image: "./img/cuteAnime.gif"
 tags: [Next.js]
-category: Frontend
+category: Next
 draft: false
 ---
 
