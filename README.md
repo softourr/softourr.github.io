@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-09-16 00:36:06
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-09-21 09:04:49
 
 ## 목차
 
@@ -63,7 +63,7 @@
 
 ## Next
 
-- [Next.js의 SSR와 React 19의 RSC 정리](https://softourr.github.io/posts/next/Next.js%EC%9D%98-SSR%EC%99%80-React-19%EC%9D%98-RSC-%EC%A0%95%EB%A6%AC/) +
+- [Next.js의 SSR와 React 19의 RSC 정리](https://softourr.github.io/posts/next/Next.js%EC%9D%98-SSR%EC%99%80-React-19%EC%9D%98-RSC-%EC%A0%95%EB%A6%AC/)
 - [Next.js의 CSR, SSR, ISR](https://softourr.github.io/posts/next/Next.js%EC%9D%98-CSR%2C-SSR%2C-ISR/)
 
 ## ProjectCamp_Nextjs
