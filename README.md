@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-09-21 09:04:49
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-09-28 09:05:00
 
 ## 목차
 
@@ -50,6 +50,7 @@
 
 ## Javascript
 
+- [CommonJS와 ES Module의 차이점에 대해서 설명해주세요](https://softourr.github.io/posts/javascript/CommonJS%EC%99%80-ES-Module%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94/) +
 - [비동기 개념 이해하기](https://softourr.github.io/posts/javascript/%EB%B9%84%EB%8F%99%EA%B8%B0-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0/)
 - [원시값과 객체의 값 저장 동작](https://softourr.github.io/posts/javascript/%EC%9B%90%EC%8B%9C%EA%B0%92%EA%B3%BC-%EA%B0%9D%EC%B2%B4%EC%9D%98-%EA%B0%92-%EC%A0%80%EC%9E%A5-%EB%8F%99%EC%9E%91/)
 - [호이호이 호이스팅 정리](https://softourr.github.io/posts/javascript/%ED%98%B8%EC%9D%B4%ED%98%B8%EC%9D%B4-%ED%98%B8%EC%9D%B4%EC%8A%A4%ED%8C%85-%EC%A0%95%EB%A6%AC/)
