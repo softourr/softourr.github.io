@@ -1,6 +1,6 @@
 # Study Notes
 
-이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-10-26 09:04:52
+이 레포지토리는 Study 노트를 자동으로 동기화합니다. 마지막 업데이트: 2025-11-01 15:33:50
 
 ## 목차
 
@@ -95,7 +95,7 @@
 
 ## blogging
 
-- [서버리스 시작할까하니 바로 뜨는 공포 이야기](https://softourr.github.io/posts/blogging/%EC%84%9C%EB%B2%84%EB%A6%AC%EC%8A%A4-%EC%8B%9C%EC%9E%91%ED%95%A0%EA%B9%8C%ED%95%98%EB%8B%88-%EB%B0%94%EB%A1%9C-%EB%9C%A8%EB%8A%94-%EA%B3%B5%ED%8F%AC-%EC%9D%B4%EC%95%BC%EA%B8%B0/)
+*현재 파일 없음*
 
 ## img
 
